@@ -1,0 +1,23 @@
+head
+  title b-plus-driven-case: agile-homework
+  meta(charset='utf-8')
+  //- gridforms
+  //- link(rel='stylesheet', href='/lib/gridforms/gridforms/gridforms.css')
+  //- script(src='/lib/gridforms/gridforms/gridforms.js') 
+  //- parsley
+  //- link(rel='stylesheet', href='/lib/parsley/src/parsley.css')
+  //- script(src='/lib/parsley/dist/parsley.js') 
+
+body
+  +loginButtons(align='right')
+  +header
+  +splash
+  +teacherAssignmentsList
+  //- +bp(widget='create-assignment')
+  //- +bp(widget='list-assignments')
+  //- +bp(widget='edit-assignment')
+  //- +bp(widget='view-assignment')
+
+  
+template(name='header')
+  h1 b-plus-driven-case: agile-homework: #{appState}

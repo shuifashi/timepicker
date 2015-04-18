@@ -1,0 +1,8 @@
+.spinner{
+  display: flex;
+}
+
+.spinner a{
+  text-decoration: none;
+  color: #333;
+}

@@ -1,0 +1,33 @@
+{
+  "title": "大气污染成因分析",
+  "assignedBy": {
+    "_id": "",
+    "name": "王青"
+  },
+  "forStudents": [
+    "陈伟津",
+    "张志恒"
+  ],
+  "restrictions": {
+    "endTime": "2015-01-11T13:12",
+    "submitTimes": "2"
+  },
+  "requirement": "分析大气污染成因",
+  "submissions": [
+    {
+      "name": "论文",
+      "filetype": [
+        "pdf",
+        "doc"
+      ],
+      "copiesAmount": "1"
+    },
+    {
+      "name": "系统",
+      "filetype": [
+        "安装包"
+      ],
+      "copiesAmount": "1"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+.grid-form .selectize-control {
+  height: 24px;
+}
+
+.grid-form .selectize-input input {
+  font-size: smaller !important;
+}
+
+.grid-form .selectize-input.items {
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.grid-form .selectize-control.single .selectize-input:after {
+  opacity: 0;
+}
+
+.grid-form fieldset {
+  margin: 30px 0 !important;
+}
+
+form.grid-form fieldset legend {
+  border-bottom: 2px solid #d9d9d9;
+}
+
+form.grid-form [data-row-span] {
+  border-bottom: 1px solid #e6e6e6;
+}
+
+form.grid-form .selectize-input .item {
+  font-size: 18px !important;
+}
+
+form.grid-form [data-row-span] [data-field-span] {
+  border-right: 1px solid #e6e6e6;
+}
+
+form.grid-form [data-row-span] [data-field-span] input[type='date']{
+  height: 21px;
+}
+
+form.grid-form [disabled='disabled'], form.grid-form .selectize-control .selectize-input.disabled {
+  color: #303030;
+  opacity: 0.9;
+}
+
+form.grid-form div.spinner {
+  height: 24px;
+}
+
+form.grid-form div.spinner i.black.icon:not(:hover) {
+  color: #e6e6e6 !important;
+}
+
+form.grid-form div.ui.checkbox label{
+  padding-left: 1.5em;
+  padding-right: 0.5em;
+}
+
+form.grid-form div.ui.checkbox + .parsley-errors-list{
+  display: inline-block;
+}
+
+form.grid-form div.ui.checkbox + input[type='text']{
+  border-bottom: 1px dashed #000;
+  display: inline;
+  width: 30px;
+  font-size: 1em;
+}
+
+form.grid-form div:not([data-row-height]) div[data-field-span] {
+  height: 56px;
+  box-sizing: border;
+}
+
+/* from agile-homework index.sass */
+#login-buttons {
+  position: absolute;
+  right: 20px;
+  z-index: 1;
+}
+
+div[data-b-plus-widget-container].hidden, div[data-b-plus-widget-container].hidden > div table {
+  height: 0;
+  opacity: 0;
+}
+
+
+
+/* 不将其设为none，会导致遮挡，造成“提交”、“清除”按钮无法点击 
+div[data-b-plus-widget-container].hidden table, div[data-b-plus-widget-container].hidden > div table {
+  
+  display: none;
+}
+*/
+    
+div[data-b-plus-widget-container]:not(.hidden) {
+  transition: opacity 1s;
+}
+
+div[data-b-plus-widget='splash'] {
+  transition: opacity 1s;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: lightgrey;
+  top: 0;
+  left: 0;
+}
+
+div[data-b-plus-widget='splash'] .welcome {
+  position: absolute;
+  /* border: 1px red solid; */
+  width: 600px;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 72px;
+  color: #00c09b;
+}
+
+.yellow-fade {
+  transition: all 1.5s !important;
+}
+
+.yellow-fade-start {
+  background-color: #e9ea9f !important;
+  color: #4A8847 !important;
+}
+

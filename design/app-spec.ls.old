@@ -1,0 +1,191 @@
+# b+应用的声明
+@current-user =
+  '@ref': 'user.username'
+  '@initial': -> Meteor.user-id!
+  '@disabled': true
+
+app-spec = ->
+  name: 'Agile Homework'
+  roles: ['student', 'teacher']
+  models:
+    assignment:
+      # '@options': {required: true} # 这里可以修改一些默认值，也可以在属性定义中单独定义
+      title: '@valid': {min: 5, required: true}
+      requirement: '@valid': {min: 10}
+      restrictions:
+        end-time: null
+        submit-times: null
+      assigned-by: @current-user
+      for-students: 
+        '@ref': 'user.username'
+        '@multi': [0, 2]
+        # '@values': ['张三', '李四', '赵武']
+      submissions: 
+        '@multi': [1, 5]
+        name: null
+        filetype: 
+          '@multi': [1, 2]
+          '@values': <[zip pdf doc *]>
+        copies-amount: null
+        description: null
+      submits-amount: null
+        # '@auto': -> @state.homeworks.length
+        # '@transit': true
+
+
+    # homework:
+    #   title: '@ref': 'assignment.title'
+    #   author: '@ref': 'user.name'
+    #   content: '@type': 'text'
+      # artifacts: '@scheme-ref': 'assignment', (assignment)-> for sub in assignment.submissions
+      #   "#{sub.name}":
+      #     '@type': 'file'
+      #     '@multi': "#{sub.copies-amount}"
+      #     '@valid': {extension: "#sub.filetypes"}
+
+
+
+  descriptions:
+    assignment:
+      labels:
+        'title': '题目'
+        'assigned-by': '出题老师'
+        'for-students': '参与学生列表'
+        'restrictions.end-time': '截止时间'
+        'restrictions.submit-times': '最多提交次数'
+        'requirement': '具体要求'
+        'submissions': '交付件列表'
+        'submissions[].name': '名称'
+        'submissions[].filetype': '类型'
+        'submissions[].copies-amount': '总量'
+        'submits-amount': '已交作业数'
+
+      placeholders:
+        '题目': '作业题目'
+        'requirement': '请输入作业要求的内容'
+        'submissions[].name': '交付件名称'
+
+      tooltips:
+        '截止时间': '截止后，将不能够提交'
+        '出题老师': '今天已经出了#{getTodayAssignemtsOfUser}题目'
+  
+    # homework:
+    #   labels:
+    #     title: '题目'
+    #     content: '内容'
+    #   placeholders:
+    #     '题目': '作业题目'
+    #     '内容': '书写作业内容……'
+
+  transformers: 
+    assignment:
+      '截止时间': (end-time, dom)-> moment end-time .from-now!
+
+  widgets:
+    * type: 'create'
+      label: '布置作业'
+      model: 'assignment'
+      # descriptions: …… 这里的会覆盖 app-spec.descriptions
+      appearance:
+        type: 'gridforms'
+        rows:
+          [ '题目(3)',  '出题老师'  ]
+          [ '参与学生列表',  '截止时间',  '最多提交次数' ]
+          [ '具体要求', 2] # 2表示height，field的height无意义
+          # * 表示是mutil rows，第1个元素为这个multi rows集合的label，第二个元素为一行的定义
+          [ '交付件列表', 
+            ['名称', '类型', '总量']
+          ]
+        buttons: {positive: '发布', negative: '清除'} # 表单总有positive和negative按钮，其名称可以这样客户化定制。
+      behaviors:
+        '题目': 'validate:keyup'
+        '出题老师': 'pop:view_user'
+      descriptions:
+        placeholders:
+          '出题老师': '请登录'
+
+
+    * type: 'list'
+      label: '作业列表'
+      model: 'assignment'
+      appearance:
+        type: 'table.semantic-ui'
+        columns: ['题目', '截止时间', '已交作业数']
+      # behaviors:
+      #   '详情': app-state: 'teacher.homeworks-of-an-assignment'
+      #   '删除': -> @assignment.remove!
+      #   '写作业': app-state: 'student.do-homework'
+
+    * '@extends': -> @widgets[0] 
+      type: 'edit'
+      label: '编辑作业安排'
+      appearance:
+        buttons: {positive: '更新', negative: '放弃'}
+      descriptions:
+        placeholders:
+          '出题老师': '-'
+
+    * '@extends': -> @widgets[0] 
+      type: 'view'
+      label: '查看作业安排'
+      descriptions:
+        placeholders:
+          '出题老师': '-'
+
+    # * type: 'create'
+    #   label: '写作业'
+    #   model: 'homework'
+    #   # descriptions: …… 这里的会覆盖 app-spec.descriptions
+    #   appearance:
+    #     type: 'gridforms'
+    #     rows:
+    #       [ '题目(3)',  'author'  ]
+    #       [ '内容', 3] # 2表示height，field的height无意义
+    #     buttons: {positive: '提交', negative: '清除'} # 表单总有positive和negative按钮，其名称可以这样客户化定制。
+
+    # * type: 'list'
+    #   label: '作业列表'
+    #   model: 'homework'
+    #   appearance:
+    #     type: 'table.semantic-ui'
+    #     columns: ['题目', 'author']
+
+    # * '@extends': -> @widgets[4] 
+    #   type: 'edit'
+    #   label: '继续作业'
+    #   appearance:
+    #     buttons: {positive: '更新', negative: '放弃'}
+
+    # * '@extends': -> @widgets[4] 
+    #   type: 'view'
+    #   label: '查看作业'
+
+    ...
+
+  runtime: # 待完善分析
+    states: <[ splash dev ]> 
+
+    states-data: 
+      dev:
+        assignment: null  
+        user: null
+      # 'teacher.assignments-list': 
+      #   'assignment': null
+      #   'homework': null
+      # 'student.assignments-list': 
+      #   'assignment': -> @find for-students: Meteor.user-id
+      #   'homework': null
+
+    states-widgets: # 说明widget的状态与state的状态间的mapping关系
+      dev: ['create-assignment']
+
+    transitions: 
+      'splash ->  dev' :   '@+:auto'  :  delay     :   1000ms 
+
+    initial-state: 'splash'
+
+if define? # a+运行时
+  define 'app-spec', [], app-spec 
+else # 独立运行
+  root = module?.exports ? @
+  root.app-spec = app-spec!

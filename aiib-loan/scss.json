@@ -1,0 +1,7 @@
+{
+  "includePaths": [
+    ".meteor/local/build/programs/server/assets/packages/wolves_bourbon",
+    "public/lib/gridforms/gridforms",
+    "client/common"
+  ]
+}
